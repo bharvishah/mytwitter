@@ -1,0 +1,31 @@
+<%= image_tag "poster.jpg", size: "400x200" %>
+
+
+<h1>Sign up here</h1>
+
+<% @user.errors.full_messages.each do |message| %>
+  <li><%= message %></li>
+<% end %>
+
+<%= form_for @user, url: create_user_path do |f| %>
+
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </p>
+
+  <p>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>

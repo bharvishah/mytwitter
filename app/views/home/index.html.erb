@@ -1,0 +1,45 @@
+<center><%= image_tag "poster.jpg", size: "400x200" %>
+
+<h1>Welcome To POSTer <%= link_to @current_user.name, profile_path(@current_user.name) %></h1></center>
+<%= button_to "Signout", sign_out_path, method: :delete, data: { confirm: "Are you sure?" } %>
+
+<p id="notice"><%= notice %></p>
+
+<%= form_for @post, url: new_post_path do |f| %>
+  <%= f.text_area :message %>
+  <%= f.submit %>
+<% end %>
+
+
+<h2> Your recent posts </h2>
+<div class="posts">
+
+  <ul>
+    <% @posts.each do |post| %>
+      <li class="post">
+        <%= post.message %>
+        <br/>
+        On <%= post.created_at.strftime("%b %e, %l:%M %p") %>
+      </li>
+    <% end %>
+  </ul>
+  <hr>
+  <h1> People you are currently following : </h1>
+
+  <% @followings.each do |following| %>
+  <h1><%= link_to following.name, profile_path(following.name) %> </h1>
+  <%= link_to "Unfollow", root_path(:unfollow_user_id => following.id), method: "get" %>
+  <ul>
+  <% following.posts.each do |post| %>
+  <li class="post">
+    <%= post.message %>
+    <br/>
+    On <%= post.created_at.strftime("%b %e, %l:%M %p") %>
+  </li>
+<% end %>
+</ul>
+<% end %>
+
+</div>
+
+<%= paginate @followings %>
